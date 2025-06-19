@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button"; // Button bg-primary is now transparent
-import { Slider } from "@/components/ui/slider"; // Slider track can be bg-muted or bg-primary
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import {
   Play,
   Pause,
@@ -16,6 +16,7 @@ import {
   Music2,
 } from 'lucide-react';
 
+// Helper function for formatting time (MM:SS)
 const formatTime = (timeInSeconds: number): string => {
   if (isNaN(timeInSeconds) || timeInSeconds < 0) return '0:00';
   const minutes = Math.floor(timeInSeconds / 60);
@@ -32,10 +33,34 @@ interface Track {
 }
 
 const playlist: Track[] = [
-  { id: 'sh-song-1', title: 'SoundHelix Song 1', artist: 'SoundHelix', coverArtUrl: 'https://picsum.photos/seed/sh1/64/64', audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { id: 'sh-song-2', title: 'SoundHelix Song 2', artist: 'SoundHelix', coverArtUrl: 'https://picsum.photos/seed/sh2/64/64', audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-  { id: 'sh-song-3', title: 'SoundHelix Song 3', artist: 'SoundHelix', coverArtUrl: 'https://picsum.photos/seed/sh3/64/64', audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-  { id: 'sh-song-4', title: 'SoundHelix Song 4', artist: 'SoundHelix', coverArtUrl: 'https://picsum.photos/seed/sh4/64/64', audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+  {
+    id: 'sh-song-1',
+    title: 'SoundHelix Song 1',
+    artist: 'SoundHelix',
+    coverArtUrl: 'https://picsum.photos/seed/sh1/64/64',
+    audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  },
+  {
+    id: 'sh-song-2',
+    title: 'SoundHelix Song 2',
+    artist: 'SoundHelix',
+    coverArtUrl: 'https://picsum.photos/seed/sh2/64/64',
+    audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  },
+  {
+    id: 'sh-song-3',
+    title: 'SoundHelix Song 3',
+    artist: 'SoundHelix',
+    coverArtUrl: 'https://picsum.photos/seed/sh3/64/64',
+    audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+  },
+  {
+    id: 'sh-song-4',
+    title: 'SoundHelix Song 4',
+    artist: 'SoundHelix',
+    coverArtUrl: 'https://picsum.photos/seed/sh4/64/64',
+    audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+  },
 ];
 
 const PlaybackControls: React.FC = () => {
@@ -76,7 +101,8 @@ const PlaybackControls: React.FC = () => {
         setCurrentTrack(playlist[0]);
       }
     }
-  }, [isShuffle, currentTrack, currentTrackIndex]); // Added currentTrack, currentTrackIndex
+  }, [isShuffle, currentTrackIndex, currentTrack]); // Added currentTrackIndex and currentTrack
+
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -94,8 +120,8 @@ const PlaybackControls: React.FC = () => {
         audio.play().catch(error => console.error("Error playing new track:", error));
       }
     }
-  }, [currentTrackIndex, isShuffle, shuffledPlaylist, playlist, isPlaying]); // Added playlist, isPlaying
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTrackIndex, isShuffle, shuffledPlaylist]); // playlist dependency removed, added shuffledPlaylist
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -131,6 +157,7 @@ const PlaybackControls: React.FC = () => {
     }
   }, [currentTrackIndex, isShuffle, shuffledPlaylist, playlist, repeatMode, isPlaying]);
 
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -146,7 +173,7 @@ const PlaybackControls: React.FC = () => {
         audio.currentTime = 0;
         audio.play().catch(e => console.error("Error replaying track:", e));
         setIsPlaying(true);
-      } else {
+      } else { 
         handleNextTrack(true);
       }
     };
@@ -197,7 +224,7 @@ const PlaybackControls: React.FC = () => {
         audioRef.current.muted = false;
         audioRef.current.volume = newVolume;
       }
-    } else {
+    } else { 
       if (volume > 0) setLastVolume(volume);
       setIsMuted(true);
       if (audioRef.current) {
@@ -234,8 +261,7 @@ const PlaybackControls: React.FC = () => {
 
   if (!currentTrack) {
     return (
-      // This container will be inside PlayerFooter, which already has backdrop-blur.
-      // Make this transparent to show PlayerFooter's glass.
+      // Changed bg-neutral-800 to bg-transparent as PlayerFooter provides the glass surface
       <div className="bg-transparent text-muted-foreground p-3 h-[88px] flex items-center justify-center w-full">
         No tracks available.
         <audio ref={audioRef} />
@@ -244,14 +270,15 @@ const PlaybackControls: React.FC = () => {
   }
 
   return (
-    // This container will be inside PlayerFooter, which already has backdrop-blur.
-    // Make this transparent to show PlayerFooter's glass effect.
-    <div className="bg-transparent text-white p-3 h-[88px] flex items-center justify-between w-full">
+    // Changed bg-neutral-900 to bg-transparent. PlayerFooter provides the glass surface.
+    <div className="bg-transparent text-foreground p-3 h-[88px] flex items-center justify-between w-full">
       <audio ref={audioRef} preload="metadata" />
+      {/* Left Section: Track Info */}
       <div className="flex items-center gap-3 w-1/4 min-w-[200px] md:w-[300px]">
         <Avatar className="h-12 w-12 rounded">
           <AvatarImage src={currentTrack.coverArtUrl} alt={currentTrack.title} />
-          <AvatarFallback className="bg-muted rounded backdrop-blur-sm"> {/* Fallback gets slight blur too */}
+          {/* Fallback uses bg-muted (now semi-transparent) */}
+          <AvatarFallback className="bg-muted rounded">
             <Music2 className="h-6 w-6 text-muted-foreground" />
           </AvatarFallback>
         </Avatar>
@@ -261,6 +288,7 @@ const PlaybackControls: React.FC = () => {
         </div>
       </div>
 
+      {/* Center Section: Playback Controls */}
       <div className="flex-grow flex flex-col items-center gap-2 max-w-xl">
         <div className="flex items-center gap-2 md:gap-3">
           <Button variant="ghost" size="icon" onClick={handleShuffleToggle} className={isShuffle ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}>
@@ -269,7 +297,8 @@ const PlaybackControls: React.FC = () => {
           <Button variant="ghost" size="icon" onClick={handlePreviousTrack} className="text-foreground/80 hover:text-foreground" disabled={playlist.length <= 1}>
             <SkipBack className="h-5 w-5" />
           </Button>
-          <Button variant="primary" size="icon" onClick={handlePlayPause} className="bg-primary text-primary-foreground hover:bg-primary/80 rounded-full h-9 w-9 p-2 shadow-lg backdrop-blur-sm">
+          {/* Play button style adjusted for better visibility on glass */}
+          <Button variant="default" size="icon" onClick={handlePlayPause} className="bg-primary/90 text-primary-foreground hover:bg-primary rounded-full h-9 w-9 p-2">
             {isPlaying ? <Pause className="h-5 w-5 fill-primary-foreground" /> : <Play className="h-5 w-5 fill-primary-foreground" />}
           </Button>
           <Button variant="ghost" size="icon" onClick={() => handleNextTrack(false)} className="text-foreground/80 hover:text-foreground" disabled={playlist.length <= 1}>
@@ -286,15 +315,15 @@ const PlaybackControls: React.FC = () => {
             max={duration > 0 ? duration : 1} 
             step={1}
             onValueChange={handleSeek}
-            // Slider's track is bg-primary, thumb is bg-primary (or respective CSS vars like --slider-track)
-            // These are now semi-transparent.
-            className="w-full [&>span:first-child]:h-1 [&>span:first-child>span]:h-1 [&>span:first-child_span]:bg-primary [&>span:first-child]:bg-muted" 
+            // Slider track style slightly adjusted for glass theme
+            className="w-full [&>span:first-child]:h-1 [&>span:first-child]:bg-muted/70 [&>span:first-child>span]:h-1 [&>span:first-child>span]:bg-primary" 
             disabled={!currentTrack || duration === 0}
           />
           <span className="text-xs text-muted-foreground w-10 text-left">{formatTime(duration)}</span>
         </div>
       </div>
 
+      {/* Right Section: Volume Control */}
       <div className="flex items-center gap-2 w-1/4 min-w-[150px] md:w-[200px] justify-end">
         <Button variant="ghost" size="icon" onClick={toggleMute} className="text-foreground/80 hover:text-foreground">
           {getVolumeIcon()}
@@ -304,7 +333,8 @@ const PlaybackControls: React.FC = () => {
           max={1}
           step={0.01}
           onValueChange={handleVolumeChange}
-          className="w-24 md:w-32 [&>span:first-child]:h-1 [&>span:first-child>span]:h-1 [&>span:first-child_span]:bg-primary [&>span:first-child]:bg-muted"
+          // Slider track style slightly adjusted for glass theme
+          className="w-24 md:w-32 [&>span:first-child]:h-1 [&>span:first-child]:bg-muted/70 [&>span:first-child>span]:h-1 [&>span:first-child>span]:bg-primary"
         />
       </div>
     </div>
