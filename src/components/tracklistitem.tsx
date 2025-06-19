@@ -7,10 +7,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"; // DropdownMenuContent will use bg-popover
+} from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
-import { motion } from 'framer-motion';
+import { cn } from "@/lib/utils"; // Assuming utils.ts exists for cn
+import { motion } from 'framer-motion'; // Added framer-motion
 
 interface TrackListItemProps {
   id: string;
@@ -21,7 +21,7 @@ interface TrackListItemProps {
   duration: string;
   onPlay: (id: string) => void;
   isCurrentTrack?: boolean;
-  isPlaying?: boolean;
+  isPlaying?: boolean; // Added to show Pause icon if it's this track and playing
 }
 
 const TrackListItem: React.FC<TrackListItemProps> = ({
@@ -41,7 +41,7 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
   const handleAction = (actionName: string) => {
     toast({
       title: "Action Triggered",
-      description: `${actionName} for \\"${title}\\".`,
+      description: `${actionName} for \"${title}\".`,
     });
     console.log(`${actionName} for track ID: ${id}`);
   };
@@ -49,15 +49,14 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
   return (
     <motion.div
       className={cn(
-        "flex items-center p-2 rounded-md group cursor-default transition-colors",
-        // Using bg-card with varying opacity for hover/active. Added backdrop-blur and border.
-        "bg-card/30 hover:bg-card/50 backdrop-blur-sm border border-transparent hover:border-[hsla(var(--border)/0.05)]",
-        isCurrentTrack && "bg-card/60 border-[hsla(var(--border)/0.1)]" // More prominent border if current
+        "flex items-center p-2 hover:bg-muted/50 rounded-md group cursor-default transition-colors", // transition-colors for Tailwind's bg hover
+        isCurrentTrack && "bg-muted/60"
       )}
       aria-current={isCurrentTrack ? "page" : undefined}
       whileHover={{ scale: 1.01, x: 2 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
+      {/* Cover Art + Play/Pause Icon */}
       <div className="relative w-10 h-10 mr-3 flex-shrink-0">
         <img
           src={coverArtUrl || 'https://via.placeholder.com/40'}
@@ -69,7 +68,7 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
           className={cn(
             "absolute inset-0 flex items-center justify-center bg-black rounded transition-opacity",
             "bg-opacity-0 group-hover:bg-opacity-50 opacity-0 group-hover:opacity-100",
-            isCurrentTrack && "bg-opacity-50 opacity-100"
+            isCurrentTrack && "bg-opacity-50 opacity-100" // More visible if current track
           )}
           aria-label={isCurrentTrack && isPlaying ? `Pause ${title}` : `Play ${title}`}
         >
@@ -81,11 +80,12 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
         </button>
       </div>
 
+      {/* Song Info: Title, Artist, Album */}
       <div className="flex-grow min-w-0 mr-3">
         <p
           className={cn(
             "font-medium truncate text-sm",
-            isCurrentTrack ? "text-primary dark:text-primary" : "text-foreground" // Ensure text-primary is visible
+            isCurrentTrack ? "text-sky-600 dark:text-sky-400" : "text-foreground"
           )}
         >
           {title}
@@ -97,9 +97,9 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
         </p>
       </div>
 
+      {/* Duration & Options Menu */}
       <div className="flex items-center ml-auto pl-2 space-x-2 flex-shrink-0">
         <span className="text-xs text-muted-foreground w-10 text-right">{duration}</span>
-        {/* DropdownMenuContent uses bg-popover, which is glassmorphic via tailwind.config and parent blur */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -111,8 +111,7 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 backdrop-blur-md border-[hsla(var(--border)/0.15)]">
-             {/* Added backdrop-blur to DropdownMenuContent itself */}
+          <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem onClick={() => handleAction('Add to Queue')}>
               <PlusCircle className="mr-2 h-4 w-4" />
               <span>Add to Queue</span>
@@ -126,6 +125,7 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
               <Heart className="mr-2 h-4 w-4" />
               <span>Like Song</span>
             </DropdownMenuItem>
+            {/* Add more options here if needed, e.g., Go to Album/Artist */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
