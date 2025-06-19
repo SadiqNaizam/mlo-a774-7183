@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; // Card uses bg-card from config
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { motion } from 'framer-motion'; // Added framer-motion
+import { motion } from 'framer-motion';
 
 interface MediaItemCardProps {
   imageUrl: string;
   title: string;
-  subtitle: string; // e.g., "Artist Name" for an album, "Playlist" for a playlist, "Artist" for an artist
+  subtitle: string;
   itemType: 'artist' | 'playlist' | 'album';
-  itemId: string; // Unique identifier for the item (e.g., slug or ID)
+  itemId: string;
 }
 
 const MediaItemCard: React.FC<MediaItemCardProps> = ({
@@ -21,19 +21,15 @@ const MediaItemCard: React.FC<MediaItemCardProps> = ({
 }) => {
   console.log(`MediaItemCard loaded for: ${title} (Type: ${itemType}, ID: ${itemId})`);
 
-  let linkTo = '#'; // Default fallback link
+  let linkTo = '#';
   const encodedItemId = encodeURIComponent(itemId);
   const encodedTitle = encodeURIComponent(title);
 
-  // Construct link based on itemType, consistent with App.tsx routes
-  // Assumes detail pages can handle item identification via query parameters
   if (itemType === 'artist') {
     linkTo = `/artist-detail?artistId=${encodedItemId}`;
   } else if (itemType === 'playlist') {
     linkTo = `/playlist-detail?playlistId=${encodedItemId}`;
   } else if (itemType === 'album') {
-    // No specific /album-detail route in App.tsx.
-    // Fallback: link to search results for the album title.
     linkTo = `/search?type=album&query=${encodedTitle}`;
   }
 
@@ -41,16 +37,18 @@ const MediaItemCard: React.FC<MediaItemCardProps> = ({
     <motion.div
       whileHover={{ scale: 1.03, y: -3 }}
       transition={{ type: "spring", stiffness: 300, damping: 15, duration: 0.2 }}
-      className="h-full" // Ensure motion.div takes full height for proper layout
+      className="h-full"
     >
-      <Card className="w-full h-full overflow-hidden rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-xl group bg-card text-card-foreground">
+      {/* bg-card is now transparent via tailwind.config.ts. Added backdrop-blur and border */}
+      <Card className="w-full h-full overflow-hidden rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-xl group bg-card text-card-foreground backdrop-blur-md border border-[hsla(var(--border)/0.1)]">
         <Link to={linkTo} className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg flex flex-col">
           <AspectRatio
             ratio={1 / 1}
-            className="bg-muted rounded-t-lg overflow-hidden"
+            // bg-muted is now transparent. Can add specific blur if an image fails to load, or keep as is.
+            className="bg-muted/50 rounded-t-lg overflow-hidden backdrop-blur-sm" 
           >
             <img
-              src={imageUrl || 'https://via.placeholder.com/300'} // Default placeholder
+              src={imageUrl || 'https://via.placeholder.com/300'}
               alt={`Cover art for ${title}`}
               className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
             />
