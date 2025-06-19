@@ -11,8 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Music, Search, UserCircle, Bell, Sun, Moon } from 'lucide-react'; // Added Sun, Moon
-import { useTheme } from '@/components/ThemeProvider'; // Added useTheme import
+import { Music, Search, UserCircle, Bell, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/components/ThemeProvider';
 
 const GlobalHeader: React.FC = () => {
   console.log('GlobalHeader loaded');
@@ -23,10 +23,10 @@ const GlobalHeader: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background/95 px-4 md:px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background backdrop-blur-xl border-[hsla(var(--border)/0.1)] supports-[backdrop-filter]:bg-background/80 px-4 md:px-6">
       <Link to="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
         <Bell className="h-6 w-6 text-blue-600" /> {/* Doraemon's Bell */}
-        <span className="font-bold text-xl text-primary">DoraMusic</span> {/* Use text-primary for theme adaptability */}
+        <span className="font-bold text-xl text-primary">DoraMusic</span>
       </Link>
       <div className="flex-1">
         <form className="relative ml-auto flex-1 sm:flex-initial">
@@ -34,10 +34,13 @@ const GlobalHeader: React.FC = () => {
           <Input
             type="search"
             placeholder="Search songs, artists, albums..."
-            className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-muted/40 focus:bg-card" // Adjusted focus style for better theme adaptability
+            // bg-input is now transparent via tailwind.config.ts. Add blur and border to input itself for better effect if needed
+            // For now, relies on header's backdrop-blur.
+            className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-input focus:bg-card border border-[hsla(var(--border)/0.1)] backdrop-blur-sm" 
           />
         </form>
       </div>
+      {/* DropdownMenu will use bg-popover, which is now transparent + blurred by parent */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="rounded-full">
@@ -50,7 +53,8 @@ const GlobalHeader: React.FC = () => {
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align="end" className="backdrop-blur-md border-[hsla(var(--border)/0.15)]">
+          {/* Added backdrop-blur to DropdownMenuContent itself */}
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Profile</DropdownMenuItem>
