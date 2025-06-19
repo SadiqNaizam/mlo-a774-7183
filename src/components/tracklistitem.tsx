@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils"; // Assuming utils.ts exists for cn
+import { motion } from 'framer-motion'; // Added framer-motion
 
 interface TrackListItemProps {
   id: string;
@@ -40,18 +41,20 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
   const handleAction = (actionName: string) => {
     toast({
       title: "Action Triggered",
-      description: `${actionName} for "${title}".`,
+      description: `${actionName} for \"${title}\".`,
     });
     console.log(`${actionName} for track ID: ${id}`);
   };
 
   return (
-    <div
+    <motion.div
       className={cn(
-        "flex items-center p-2 hover:bg-muted/50 rounded-md group cursor-default transition-colors",
+        "flex items-center p-2 hover:bg-muted/50 rounded-md group cursor-default transition-colors", // transition-colors for Tailwind's bg hover
         isCurrentTrack && "bg-muted/60"
       )}
       aria-current={isCurrentTrack ? "page" : undefined}
+      whileHover={{ scale: 1.01, x: 2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
       {/* Cover Art + Play/Pause Icon */}
       <div className="relative w-10 h-10 mr-3 flex-shrink-0">
@@ -126,7 +129,7 @@ const TrackListItem: React.FC<TrackListItemProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
