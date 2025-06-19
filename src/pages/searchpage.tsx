@@ -5,13 +5,13 @@ import GlobalHeader from '@/components/layout/GlobalHeader';
 import NavigationSidebar from '@/components/layout/NavigationSidebar';
 import PlayerFooter from '@/components/layout/PlayerFooter';
 
-import TrackListItem from '@/components/TrackListItem'; // Will be glass
-import MediaItemCard from '@/components/MediaItemCard'; // Will be glass
+import TrackListItem from '@/components/TrackListItem';
+import MediaItemCard from '@/components/MediaItemCard';
 
-import { Input } from '@/components/ui/input'; // bg-input is glass
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; // TabsList and active TabsTrigger will be glass
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from "@/components/ui/use-toast";
 
 import { Search as SearchIcon, Music, ListMusic, User, Disc3 } from 'lucide-react';
@@ -50,7 +50,7 @@ const placeholderAlbums: SampleMediaItem[] = [
 ];
 
 const placeholderPlaylists: SampleMediaItem[] = [
-  { id: 'playlist-1', imageUrl: 'https://via.placeholder.com/150/20C997/FFFFFF?Text=Pl1', title: 'Doraemon\\'s Pocket Mix', subtitle: 'Playlist', itemType: 'playlist' },
+  { id: 'playlist-1', imageUrl: 'https://via.placeholder.com/150/20C997/FFFFFF?Text=Pl1', title: 'Doraemon\'s Pocket Mix', subtitle: 'Playlist', itemType: 'playlist' },
   { id: 'playlist-2', imageUrl: 'https://via.placeholder.com/150/E83E8C/FFFFFF?Text=Pl2', title: 'Gadget Grooves', subtitle: 'Playlist', itemType: 'playlist' },
 ];
 
@@ -75,8 +75,7 @@ const SearchPage = () => {
   };
 
   const renderSectionHeader = (title: string, icon?: React.ElementType) => (
-    // Section header can be a subtle glass panel itself or just text on the page's main backdrop
-    <div className="flex items-center justify-between mb-4 p-2 rounded-md bg-card/20 backdrop-blur-sm">
+    <div className="flex items-center justify-between mb-4">
       <h2 className="text-2xl font-semibold tracking-tight text-foreground flex items-center">
         {icon && React.createElement(icon, { className: "mr-2 h-6 w-6 text-primary" })}
         {title}
@@ -85,38 +84,39 @@ const SearchPage = () => {
   );
 
   return (
-    // Main page background is a gradient, serves as backdrop for glass elements
-    <div className="relative flex flex-col h-screen bg-neutral-900"> {/* This bg is for outer container, main content has gradient */}
+    <div className="relative flex flex-col h-screen bg-transparent"> {/* bg-transparent to show body's bg-background */}
       <GlobalHeader />
       <div className="flex flex-1 overflow-hidden pt-16">
         <NavigationSidebar />
-        <main className="flex-1 overflow-y-auto sm:ml-60 pb-[88px] bg-gradient-to-b from-neutral-800/90 via-neutral-900/95 to-black/95">
+        {/* Main content with semi-transparent gradient and blur */}
+        <main className="flex-1 overflow-y-auto sm:ml-60 pb-[88px] 
+                         bg-gradient-to-b from-muted/30 via-background/50 to-background/70 
+                         dark:from-neutral-800/70 dark:via-neutral-900/60 dark:to-neutral-950/50 
+                         backdrop-blur-md supports-[backdrop-filter]:bg-transparent">
           <ScrollArea className="h-full">
-            <div className="px-4 py-6 md:px-6 lg:px-8 text-white"> {/* Text color for general text */}
-              <section className="mb-8 p-4 rounded-lg bg-card/30 backdrop-blur-md border border-[hsla(var(--border)/0.1)]">
-                <h1 className="text-3xl font-bold mb-4 text-foreground">Search</h1>
+            <div className="px-4 py-6 md:px-6 lg:px-8 text-foreground">
+              <section className="mb-8">
+                <h1 className="text-3xl font-bold mb-4">Search</h1>
                 <div className="relative">
                   <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                     type="search"
                     placeholder="What do you want to listen to?"
-                    // bg-input is transparent, add own blur and border for distinctness
-                    className="pl-10 pr-4 py-3 text-base h-12 rounded-full bg-input backdrop-blur-sm border border-[hsla(var(--border)/0.1)] focus:bg-card/60 focus:ring-primary text-foreground placeholder-muted-foreground"
+                    className="pl-10 pr-4 py-3 text-base h-12 rounded-full bg-input backdrop-blur-sm border-border focus:bg-card focus:ring-primary text-foreground placeholder:text-muted-foreground"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </section>
 
-              {/* TabsList uses bg-muted, which is now transparent. Add blur and border. */}
               <Tabs defaultValue="all" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-6 bg-muted/50 backdrop-blur-md border border-[hsla(var(--border)/0.1)] p-1 rounded-md">
-                  {/* Active trigger gets a more prominent glass style */}
-                  <TabsTrigger value="all" className="data-[state=active]:bg-card/70 data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-card/50 backdrop-blur-sm rounded">All</TabsTrigger>
-                  <TabsTrigger value="tracks" className="data-[state=active]:bg-card/70 data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-card/50 backdrop-blur-sm rounded">Tracks</TabsTrigger>
-                  <TabsTrigger value="artists" className="data-[state=active]:bg-card/70 data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-card/50 backdrop-blur-sm rounded">Artists</TabsTrigger>
-                  <TabsTrigger value="albums" className="data-[state=active]:bg-card/70 data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-card/50 backdrop-blur-sm rounded">Albums</TabsTrigger>
-                  <TabsTrigger value="playlists" className="data-[state=active]:bg-card/70 data-[state=active]:text-foreground data-[state=active]:shadow-md hover:bg-card/50 backdrop-blur-sm rounded">Playlists</TabsTrigger>
+                {/* TabsList uses bg-muted (semi-transparent) and backdrop-blur */}
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-6 bg-muted p-1 rounded-md backdrop-blur-sm">
+                  <TabsTrigger value="all" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-card/70 backdrop-blur-sm">All</TabsTrigger>
+                  <TabsTrigger value="tracks" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-card/70 backdrop-blur-sm">Tracks</TabsTrigger>
+                  <TabsTrigger value="artists" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-card/70 backdrop-blur-sm">Artists</TabsTrigger>
+                  <TabsTrigger value="albums" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-card/70 backdrop-blur-sm">Albums</TabsTrigger>
+                  <TabsTrigger value="playlists" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-sm hover:bg-card/70 backdrop-blur-sm">Playlists</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="all">
@@ -128,7 +128,11 @@ const SearchPage = () => {
                           {renderSectionHeader('Top Tracks', Music)}
                           <div className="space-y-1">
                             {placeholderTracks.slice(0, 3).map(track => (
-                              <TrackListItem key={track.id} {...track} onPlay={() => handlePlayTrack(track.id)} />
+                              <TrackListItem
+                                key={track.id}
+                                {...track}
+                                onPlay={() => handlePlayTrack(track.id)}
+                              />
                             ))}
                           </div>
                         </section>
@@ -150,7 +154,13 @@ const SearchPage = () => {
                   {searchQuery === '' && <p className="text-center text-muted-foreground mt-10">Enter a search term to find tracks.</p>}
                   {searchQuery !== '' && placeholderTracks.length > 0 ? (
                     <div className="space-y-1">
-                      {placeholderTracks.map(track => ( <TrackListItem key={track.id} {...track} onPlay={() => handlePlayTrack(track.id)} /> ))}
+                      {placeholderTracks.map(track => (
+                        <TrackListItem
+                          key={track.id}
+                          {...track}
+                          onPlay={() => handlePlayTrack(track.id)}
+                        />
+                      ))}
                     </div>
                   ) : searchQuery !== '' && <p className="text-muted-foreground">No tracks found for "{searchQuery}".</p>}
                 </TabsContent>
