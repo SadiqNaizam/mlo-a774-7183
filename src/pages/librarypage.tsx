@@ -2,10 +2,10 @@ import React from 'react';
 import GlobalHeader from '@/components/layout/GlobalHeader';
 import NavigationSidebar from '@/components/layout/NavigationSidebar';
 import PlayerFooter from '@/components/layout/PlayerFooter';
-import MediaItemCard from '@/components/MediaItemCard';
-import TrackListItem from '@/components/TrackListItem';
+import MediaItemCard from '@/components/MediaItemCard'; // Is glass
+import TrackListItem from '@/components/TrackListItem'; // Is glass
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; // TabsList and active TabsTrigger will be glass
 
 // Placeholder data
 const samplePlaylists = [
@@ -39,106 +39,59 @@ const LibraryPage: React.FC = () => {
 
   const handlePlaySong = (songId: string) => {
     console.log(`Attempting to play song from Library: ${songId}`);
-    // In a real application, this would integrate with a global player context
-    // For now, it's a placeholder. The PlaybackControls component handles its own audio.
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <GlobalHeader />
-      <div className="flex flex-1 h-full"> {/* Ensure flex-1 takes remaining height */}
+      <div className="flex flex-1 h-full">
         <NavigationSidebar />
-        <main className="flex-1 pt-16 pl-0 sm:pl-60 pb-[88px] bg-background"> {/* Adjusted pl for sm screens */}
+        {/* Main content area has its own background (default bg-background), serving as a backdrop for glass elements within it. */}
+        <main className="flex-1 pt-16 pl-0 sm:pl-60 pb-[88px] bg-background">
           <ScrollArea className="h-full w-full">
             <div className="container mx-auto px-4 py-6 lg:px-8">
               <h2 className="text-3xl font-bold tracking-tight text-foreground mb-6">
                 Your Library
               </h2>
               <Tabs defaultValue="playlists" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2 p-1 h-auto bg-muted rounded-lg">
-                  <TabsTrigger value="playlists" className="py-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Playlists</TabsTrigger>
-                  <TabsTrigger value="liked-songs" className="py-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Liked Songs</TabsTrigger>
-                  <TabsTrigger value="artists" className="py-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Artists</TabsTrigger>
-                  <TabsTrigger value="albums" className="py-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Albums</TabsTrigger>
+                {/* TabsList uses bg-muted, which is now transparent. Add blur and border. */}
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2 p-1 h-auto bg-muted/60 backdrop-blur-md border border-[hsla(var(--border)/0.1)] rounded-lg">
+                  <TabsTrigger value="playlists" className="py-2 data-[state=active]:bg-card/80 data-[state=active]:text-foreground data-[state=active]:shadow-lg backdrop-blur-sm rounded data-[state=active]:border data-[state=active]:border-[hsla(var(--border)/0.15)]">Playlists</TabsTrigger>
+                  <TabsTrigger value="liked-songs" className="py-2 data-[state=active]:bg-card/80 data-[state=active]:text-foreground data-[state=active]:shadow-lg backdrop-blur-sm rounded data-[state=active]:border data-[state=active]:border-[hsla(var(--border)/0.15)]">Liked Songs</TabsTrigger>
+                  <TabsTrigger value="artists" className="py-2 data-[state=active]:bg-card/80 data-[state=active]:text-foreground data-[state=active]:shadow-lg backdrop-blur-sm rounded data-[state=active]:border data-[state=active]:border-[hsla(var(--border)/0.15)]">Artists</TabsTrigger>
+                  <TabsTrigger value="albums" className="py-2 data-[state=active]:bg-card/80 data-[state=active]:text-foreground data-[state=active]:shadow-lg backdrop-blur-sm rounded data-[state=active]:border data-[state=active]:border-[hsla(var(--border)/0.15)]">Albums</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="playlists">
                   {samplePlaylists.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
-                      {samplePlaylists.map((playlist) => (
-                        <MediaItemCard
-                          key={playlist.id}
-                          itemId={playlist.id}
-                          title={playlist.title}
-                          subtitle={playlist.subtitle}
-                          imageUrl={playlist.imageUrl}
-                          itemType={playlist.itemType}
-                        />
-                      ))}
+                      {samplePlaylists.map((playlist) => ( <MediaItemCard key={playlist.id} {...playlist} /> ))}
                     </div>
-                  ) : (
-                    <p className="text-muted-foreground">You haven't created or saved any playlists yet.</p>
-                  )}
+                  ) : ( <p className="text-muted-foreground p-4 bg-card backdrop-blur-sm rounded-md border border-[hsla(var(--border)/0.1)]">You haven't created or saved any playlists yet.</p> )}
                 </TabsContent>
 
                 <TabsContent value="liked-songs">
                   {sampleLikedSongs.length > 0 ? (
                     <div className="space-y-2">
-                      {sampleLikedSongs.map((song, index) => (
-                        <TrackListItem
-                          key={song.id}
-                          id={song.id}
-                          coverArtUrl={song.coverArtUrl}
-                          title={song.title}
-                          artist={song.artist}
-                          album={song.album}
-                          duration={song.duration}
-                          onPlay={handlePlaySong}
-                          // isCurrentTrack and isPlaying would be managed by a player context
-                        />
-                      ))}
+                      {sampleLikedSongs.map((song) => ( <TrackListItem key={song.id} {...song} onPlay={handlePlaySong} /> ))}
                     </div>
-                  ) : (
-                     <p className="text-muted-foreground">You haven't liked any songs yet.</p>
-                  )}
+                  ) : ( <p className="text-muted-foreground p-4 bg-card backdrop-blur-sm rounded-md border border-[hsla(var(--border)/0.1)]">You haven't liked any songs yet.</p> )}
                 </TabsContent>
 
                 <TabsContent value="artists">
                    {sampleArtists.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
-                      {sampleArtists.map((artist) => (
-                        <MediaItemCard
-                          key={artist.id}
-                          itemId={artist.id}
-                          title={artist.title}
-                          subtitle={artist.subtitle}
-                          imageUrl={artist.imageUrl}
-                          itemType={artist.itemType}
-                        />
-                      ))}
+                      {sampleArtists.map((artist) => ( <MediaItemCard key={artist.id} {...artist} /> ))}
                     </div>
-                   ) : (
-                    <p className="text-muted-foreground">You aren't following any artists yet.</p>
-                   )}
+                   ) : ( <p className="text-muted-foreground p-4 bg-card backdrop-blur-sm rounded-md border border-[hsla(var(--border)/0.1)]">You aren't following any artists yet.</p> )}
                 </TabsContent>
 
                 <TabsContent value="albums">
                   {sampleAlbums.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
-                      {sampleAlbums.map((album) => (
-                        <MediaItemCard
-                          key={album.id}
-                          itemId={album.id}
-                          title={album.title}
-                          subtitle={album.subtitle}
-                          imageUrl={album.imageUrl}
-                          itemType={album.itemType}
-                        />
-                      ))}
+                      {sampleAlbums.map((album) => ( <MediaItemCard key={album.id} {...album} /> ))}
                     </div>
-                  ) : (
-                     <p className="text-muted-foreground">You haven't saved any albums yet.</p>
-                  )}
+                  ) : ( <p className="text-muted-foreground p-4 bg-card backdrop-blur-sm rounded-md border border-[hsla(var(--border)/0.1)]">You haven't saved any albums yet.</p> )}
                 </TabsContent>
               </Tabs>
             </div>
