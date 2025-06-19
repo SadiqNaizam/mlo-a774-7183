@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { ThemeProvider } from "@/components/ThemeProvider"; // Added import
 
 import ArtistDetailPage from "./pages/ArtistDetailPage";
 import HomePage from "./pages/HomePage";
@@ -16,27 +16,29 @@ const queryClient = new QueryClient();
 
 
 const App = () => (
-<QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <BrowserRouter>
-        <Routes>
+<ThemeProvider defaultTheme="system" storageKey="dora-music-ui-theme">
+  <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+          <Routes>
 
 
-          <Route path="/" element={<HomePage />} />
-          <Route path="/artist-detail" element={<ArtistDetailPage />} />
-          <Route path="/library" element={<LibraryPage />} />
-          <Route path="/playlist-detail" element={<PlaylistDetailPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          {/* catch-all */}
-          <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/artist-detail" element={<ArtistDetailPage />} />
+            <Route path="/library" element={<LibraryPage />} />
+            <Route path="/playlist-detail" element={<PlaylistDetailPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            {/* catch-all */}
+            <Route path="*" element={<NotFound />} />
 
 
-        </Routes>
-    </BrowserRouter>
-    </TooltipProvider>
-</QueryClientProvider>
+          </Routes>
+      </BrowserRouter>
+      </TooltipProvider>
+  </QueryClientProvider>
+</ThemeProvider>
 );
 
 export default App;
