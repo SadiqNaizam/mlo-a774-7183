@@ -22,6 +22,7 @@ export default {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
+        ringAccent: 'hsl(var(--ring-accent))', // Added accent ring color
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
@@ -64,9 +65,12 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: 'var(--radius)', /* Will be 0.75rem (12px) */
+				md: 'calc(var(--radius) - 4px)', /* Will be 8px */
+				sm: 'calc(var(--radius) - 8px)'  /* Will be 4px */
+			},
+			fontFamily: {
+        sans: ['var(--font-sans-custom)'], // Map Tailwind's sans to "Nunito Sans"
 			},
 			keyframes: {
 				'accordion-down': {
