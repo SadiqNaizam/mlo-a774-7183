@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card"; // Card uses bg-card from config
+import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { motion } from 'framer-motion';
 
@@ -39,13 +39,12 @@ const MediaItemCard: React.FC<MediaItemCardProps> = ({
       transition={{ type: "spring", stiffness: 300, damping: 15, duration: 0.2 }}
       className="h-full"
     >
-      {/* bg-card is now transparent via tailwind.config.ts. Added backdrop-blur and border */}
-      <Card className="w-full h-full overflow-hidden rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-xl group bg-card text-card-foreground backdrop-blur-md border border-[hsla(var(--border)/0.1)]">
+      {/* Card uses bg-card (now semi-transparent) and gets backdrop-blur-md */}
+      <Card className="w-full h-full overflow-hidden rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-xl group bg-card text-card-foreground backdrop-blur-md">
         <Link to={linkTo} className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg flex flex-col">
           <AspectRatio
             ratio={1 / 1}
-            // bg-muted is now transparent. Can add specific blur if an image fails to load, or keep as is.
-            className="bg-muted/50 rounded-t-lg overflow-hidden backdrop-blur-sm" 
+            className="bg-muted/30 rounded-t-lg overflow-hidden" /* Slightly transparent muted for placeholder aspect ratio */
           >
             <img
               src={imageUrl || 'https://via.placeholder.com/300'}
