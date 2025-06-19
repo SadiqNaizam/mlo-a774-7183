@@ -11,10 +11,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-// Button component is available if needed for "View All" etc., but not used in this version to keep navigation simple.
-// import { Button } from "@/components/ui/button";
-// Link is used internally by MediaItemCard and NavigationSidebar.
-// import { Link } from 'react-router-dom';
 
 interface MediaItemData {
   id: string;
@@ -35,7 +31,7 @@ const featuredPlaylistsData: MediaItemData[] = [
 const newReleasesData: MediaItemData[] = [
   { id: 'the-dorayakis-album', imageUrl: 'https://placehold.co/300x300/00BCD4/FFFFFF/png?text=Future+Sounds&font=sans-serif', title: 'Future Sounds', subtitle: 'The Dorayakis', itemType: 'album' },
   { id: 'gadget-grooves-album', imageUrl: 'https://placehold.co/300x300/FF9800/FFFFFF/png?text=Time+Warp&font=sans-serif', title: 'Time Warp Beats', subtitle: 'Gadget Grooves', itemType: 'album' },
-  { id: 'bell-ringers-single', imageUrl: 'https://placehold.co/300x300/8BC34A/000000/png?text=Anywhere+Pop&font=sans-serif', title: 'Anywhere Door Pop', subtitle: 'Bell Ringers', itemType: 'album' }, // Assuming single is treated as an album type for card
+  { id: 'bell-ringers-single', imageUrl: 'https://placehold.co/300x300/8BC34A/000000/png?text=Anywhere+Pop&font=sans-serif', title: 'Anywhere Door Pop', subtitle: 'Bell Ringers', itemType: 'album' }, 
   { id: 'future-gadget-band', imageUrl: 'https://placehold.co/300x300/E91E63/FFFFFF/png?text=Techno+Dreams&font=sans-serif', title: 'Techno Dreams', subtitle: 'Future Gadget Band', itemType: 'album' },
 ];
 
@@ -50,15 +46,20 @@ const HomePage: React.FC = () => {
   console.log('HomePage loaded');
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    // body bg-background is now semi-transparent. This div provides overall structure.
+    <div className="flex flex-col h-screen bg-transparent"> 
       <GlobalHeader />
-      <div className="flex flex-1 overflow-hidden"> {/* Container for sidebar and main content */}
+      <div className="flex flex-1 overflow-hidden">
         <NavigationSidebar />
         <ScrollArea className="flex-1">
-          <main className="px-4 md:px-6 py-6 sm:ml-60 mt-16 mb-[88px] bg-gradient-to-b from-blue-100 via-white to-white dark:from-neutral-900 dark:via-neutral-950 dark:to-black">
-            {/* Section 1: Featured Playlists */}
+          {/* Main content area with semi-transparent gradient and backdrop-blur */}
+          <main className="px-4 md:px-6 py-6 sm:ml-60 mt-16 mb-[88px] 
+                           bg-gradient-to-b 
+                           from-blue-100/60 via-background/50 to-background/30 
+                           dark:from-neutral-900/70 dark:via-neutral-950/60 dark:to-black/50 
+                           backdrop-blur-md supports-[backdrop-filter]:bg-transparent">
             <section className="mb-10">
-              <h2 className="text-3xl font-bold mb-5 text-neutral-800 dark:text-neutral-100">Featured Playlists</h2>
+              <h2 className="text-3xl font-bold mb-5 text-foreground">Featured Playlists</h2>
               <Carousel
                 opts={{ align: "start" }}
                 className="w-full"
@@ -76,14 +77,13 @@ const HomePage: React.FC = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden sm:flex" />
-                <CarouselNext className="hidden sm:flex" />
+                <CarouselPrevious className="hidden sm:flex bg-background/70 hover:bg-background/90 backdrop-blur-sm" />
+                <CarouselNext className="hidden sm:flex bg-background/70 hover:bg-background/90 backdrop-blur-sm" />
               </Carousel>
             </section>
 
-            {/* Section 2: New Releases */}
             <section className="mb-10">
-              <h2 className="text-3xl font-bold mb-5 text-neutral-800 dark:text-neutral-100">New Releases</h2>
+              <h2 className="text-3xl font-bold mb-5 text-foreground">New Releases</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {newReleasesData.map((item) => (
                   <MediaItemCard
@@ -98,9 +98,8 @@ const HomePage: React.FC = () => {
               </div>
             </section>
 
-            {/* Section 3: Recently Played */}
             <section className="mb-10">
-              <h2 className="text-3xl font-bold mb-5 text-neutral-800 dark:text-neutral-100">Recently Played</h2>
+              <h2 className="text-3xl font-bold mb-5 text-foreground">Recently Played</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {recentlyPlayedData.map((item) => (
                   <MediaItemCard
