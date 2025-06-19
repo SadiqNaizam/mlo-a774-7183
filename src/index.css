@@ -4,92 +4,92 @@
 
 @layer base {
   :root {
-    /* Doraemon Theme - Light Mode */
-    --background: 0 0% 100%; /* White */
-    --foreground: 220 10% 25%; /* Dark Gray for text */
+    /* Doraemon Theme - Light Mode - Glassmorphic */
+    --background: 0 0% 100% / 0.8; /* White, semi-transparent */
+    --foreground: 220 10% 25%; /* Dark Gray for text (opaque) */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 10% 25%;
+    --card: 0 0% 98% / 0.65; /* Slightly off-white, semi-transparent */
+    --card-foreground: 220 10% 25%; /* (opaque) */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 25%;
+    --popover: 0 0% 96% / 0.7; /* Light gray, semi-transparent */
+    --popover-foreground: 220 10% 25%; /* (opaque) */
 
-    --primary: 200 100% 46.1%; /* Doraemon Blue #00A0E9 */
-    --primary-foreground: 0 0% 100%; /* White */
+    --primary: 200 100% 46.1%; /* Doraemon Blue #00A0E9 (opaque) */
+    --primary-foreground: 0 0% 100%; /* White (opaque) */
 
-    --secondary: 50.6 100% 50%; /* Doraemon Yellow #FFD700 */
-    --secondary-foreground: 220 10% 25%; /* Dark Gray for contrast on yellow */
+    --secondary: 50.6 100% 50%; /* Doraemon Yellow #FFD700 (opaque) */
+    --secondary-foreground: 220 10% 25%; /* Dark Gray for contrast on yellow (opaque) */
 
-    --muted: 210 40% 96.1%; /* Light Gray */
-    --muted-foreground: 215.4 16.3% 46.9%; /* Medium Gray */
+    --muted: 210 40% 96.1% / 0.5; /* Light Gray, semi-transparent */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium Gray (opaque) */
 
-    --accent: 50.6 100% 50%; /* Doraemon Yellow (can be same as secondary or different) */
-    --accent-foreground: 220 10% 25%;
+    --accent: 50.6 100% 50% / 0.85; /* Doraemon Yellow, slightly transparent if used as bg */
+    --accent-foreground: 220 10% 25%; /* (opaque) */
 
-    --destructive: 355.3 100% 45.1%; /* Doraemon Red #E60012 */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 355.3 100% 45.1%; /* Doraemon Red #E60012 (opaque) */
+    --destructive-foreground: 0 0% 100%; /* White (opaque) */
 
-    --border: 214.3 31.8% 91.4%; /* Light Gray */
-    --input: 214.3 31.8% 91.4%; /* Light Gray */
-    --ring: 200 100% 46.1%; /* Doraemon Blue for default focus */
-    --ring-accent: 50.6 100% 50%; /* Doraemon Yellow for accent focus */
+    --border: 214.3 31.8% 91.4% / 0.2; /* Light Gray, very transparent */
+    --input: 214.3 31.8% 91.4% / 0.4; /* Light Gray, semi-transparent for inputs */
+    --ring: 200 100% 46.1% / 0.5; /* Doraemon Blue for default focus, semi-transparent */
+    --ring-accent: 50.6 100% 50% / 0.5; /* Doraemon Yellow for accent focus, semi-transparent */
 
     --radius: 0.75rem; /* 12px for softer rounded corners */
 
-    /* Sidebar specific colors - aligned with Doraemon theme */
-    --sidebar-background: 200 100% 97%; /* Very light Doraemon Blue tint */
-    --sidebar-foreground: 220 10% 25%; /* Dark Gray */
-    --sidebar-primary: 200 100% 46.1%; /* Doraemon Blue */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 50.6 100% 50%; /* Doraemon Yellow */
-    --sidebar-accent-foreground: 220 10% 25%; /* Dark Gray */
-    --sidebar-border: 200 50% 85%; /* Light blue-gray */
-    --sidebar-ring: 50.6 100% 50%; /* Doraemon Yellow for sidebar focus */
+    /* Sidebar specific colors - aligned with Doraemon theme - Glassmorphic */
+    --sidebar-background: 200 100% 97% / 0.6; /* Very light Doraemon Blue tint, semi-transparent */
+    --sidebar-foreground: 220 10% 25%; /* Dark Gray (opaque) */
+    --sidebar-primary: 200 100% 46.1%; /* Doraemon Blue (opaque) */
+    --sidebar-primary-foreground: 0 0% 100%; /* White (opaque) */
+    --sidebar-accent: 50.6 100% 50%; /* Doraemon Yellow (opaque) */
+    --sidebar-accent-foreground: 220 10% 25%; /* Dark Gray (opaque) */
+    --sidebar-border: 200 50% 85% / 0.25; /* Light blue-gray, semi-transparent */
+    --sidebar-ring: 50.6 100% 50% / 0.5; /* Doraemon Yellow for sidebar focus, semi-transparent */
 
     /* Typography */
     --font-sans-custom: "Nunito Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
 
   .dark {
-    /* Doraemon Theme - Dark Mode */
-    --background: 200 20% 10%;
-    --foreground: 200 15% 85%;
+    /* Doraemon Theme - Dark Mode - Glassmorphic */
+    --background: 200 20% 10% / 0.8; /* Dark blue-gray, semi-transparent */
+    --foreground: 200 15% 85%; /* Light grayish blue (opaque) */
 
-    --card: 200 20% 15%;
-    --card-foreground: 200 15% 85%;
+    --card: 200 20% 15% / 0.65; /* Darker blue-gray, semi-transparent */
+    --card-foreground: 200 15% 85%; /* (opaque) */
 
-    --popover: 200 20% 15%;
-    --popover-foreground: 200 15% 85%;
+    --popover: 200 20% 15% / 0.7; /* Darker blue-gray, semi-transparent */
+    --popover-foreground: 200 15% 85%; /* (opaque) */
 
-    --primary: 200 100% 65%; /* Lighter Doraemon Blue */
-    --primary-foreground: 200 20% 10%; /* Dark for contrast */
+    --primary: 200 100% 65%; /* Lighter Doraemon Blue (opaque) */
+    --primary-foreground: 200 20% 10%; /* Dark for contrast (opaque) */
 
-    --secondary: 50.6 100% 70%; /* Lighter Doraemon Yellow */
-    --secondary-foreground: 50.6 30% 20%; /* Dark desaturated yellow/brown */
+    --secondary: 50.6 100% 70%; /* Lighter Doraemon Yellow (opaque) */
+    --secondary-foreground: 50.6 30% 20%; /* Dark desaturated yellow/brown (opaque) */
 
-    --muted: 200 15% 25%;
-    --muted-foreground: 200 15% 75%;
+    --muted: 200 15% 25% / 0.5; /* Dark gray-blue, semi-transparent */
+    --muted-foreground: 200 15% 75%; /* Lighter gray-blue (opaque) */
 
-    --accent: 50.6 100% 70%; /* Lighter Doraemon Yellow */
-    --accent-foreground: 50.6 30% 20%;
+    --accent: 50.6 100% 70% / 0.85; /* Lighter Doraemon Yellow, slightly transparent if used as bg */
+    --accent-foreground: 50.6 30% 20%; /* (opaque) */
 
-    --destructive: 355.3 100% 65%; /* Lighter Doraemon Red */
-    --destructive-foreground: 355.3 20% 10%; /* Dark for contrast */
+    --destructive: 355.3 100% 65%; /* Lighter Doraemon Red (opaque) */
+    --destructive-foreground: 355.3 20% 10%; /* Dark for contrast (opaque) */
 
-    --border: 200 15% 25%;
-    --input: 200 15% 25%;
-    --ring: 200 100% 65%; /* Lighter Doraemon Blue */
-    --ring-accent: 50.6 100% 70%; /* Lighter Doraemon Yellow */
+    --border: 200 15% 25% / 0.2; /* Dark gray-blue, very transparent */
+    --input: 200 15% 25% / 0.4; /* Dark gray-blue, semi-transparent for inputs */
+    --ring: 200 100% 65% / 0.5; /* Lighter Doraemon Blue, semi-transparent */
+    --ring-accent: 50.6 100% 70% / 0.5; /* Lighter Doraemon Yellow, semi-transparent */
 
-    /* Sidebar Dark Theme */
-    --sidebar-background: 200 20% 8%;
-    --sidebar-foreground: 200 15% 85%;
-    --sidebar-primary: 200 100% 65%;
-    --sidebar-primary-foreground: 200 20% 10%;
-    --sidebar-accent: 50.6 100% 70%;
-    --sidebar-accent-foreground: 50.6 30% 20%;
-    --sidebar-border: 200 15% 20%;
-    --sidebar-ring: 50.6 100% 70%;
+    /* Sidebar Dark Theme - Glassmorphic */
+    --sidebar-background: 200 20% 8% / 0.6; /* Very dark blue-gray, semi-transparent */
+    --sidebar-foreground: 200 15% 85%; /* (opaque) */
+    --sidebar-primary: 200 100% 65%; /* (opaque) */
+    --sidebar-primary-foreground: 200 20% 10%; /* (opaque) */
+    --sidebar-accent: 50.6 100% 70%; /* (opaque) */
+    --sidebar-accent-foreground: 50.6 30% 20%; /* (opaque) */
+    --sidebar-border: 200 15% 20% / 0.25; /* Darker gray-blue, semi-transparent */
+    --sidebar-ring: 50.6 100% 70% / 0.5; /* semi-transparent */
   }
 }
 
@@ -97,11 +97,14 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border; /* Uses new semi-transparent border */
   }
 
   body {
-    @apply bg-background text-foreground font-sans; /* Apply new base font */
+    /* Add a subtle global background if needed for blur to interact with */
+    /* For example: bg-[url('/path-to-subtle-pattern.png')] or a very subtle gradient */
+    /* Keeping it simple for now, page backgrounds will create layers for blur */
+    @apply bg-background text-foreground font-sans; /* bg-background is now semi-transparent */
   }
 
   h1, h2, h3, h4, h5, h6 {
