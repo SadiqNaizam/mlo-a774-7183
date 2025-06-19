@@ -23,10 +23,10 @@ const GlobalHeader: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background backdrop-blur-xl border-[hsla(var(--border)/0.1)] supports-[backdrop-filter]:bg-background/80 px-4 md:px-6">
+    <header className="sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 backdrop-blur-lg supports-[backdrop-filter]:bg-background"> {/* Applied backdrop-blur-lg, bg-background now controls alpha */}
       <Link to="/" className="flex items-center gap-2 text-lg font-semibold md:text-base">
         <Bell className="h-6 w-6 text-blue-600" /> {/* Doraemon's Bell */}
-        <span className="font-bold text-xl text-primary">DoraMusic</span>
+        <span className="font-bold text-xl text-primary">DoraMusic</span> {/* Use text-primary for theme adaptability */}
       </Link>
       <div className="flex-1">
         <form className="relative ml-auto flex-1 sm:flex-initial">
@@ -34,13 +34,10 @@ const GlobalHeader: React.FC = () => {
           <Input
             type="search"
             placeholder="Search songs, artists, albums..."
-            // bg-input is now transparent via tailwind.config.ts. Add blur and border to input itself for better effect if needed
-            // For now, relies on header's backdrop-blur.
-            className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-input focus:bg-card border border-[hsla(var(--border)/0.1)] backdrop-blur-sm" 
+            className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-input backdrop-blur-sm focus:bg-card" /* Use bg-input (now semi-transparent) + backdrop-blur */
           />
         </form>
       </div>
-      {/* DropdownMenu will use bg-popover, which is now transparent + blurred by parent */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" className="rounded-full">
@@ -53,8 +50,8 @@ const GlobalHeader: React.FC = () => {
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="backdrop-blur-md border-[hsla(var(--border)/0.15)]">
-          {/* Added backdrop-blur to DropdownMenuContent itself */}
+        {/* DropdownMenuContent will use bg-popover (now semi-transparent) and will show blurred content behind it */}
+        <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Profile</DropdownMenuItem>
