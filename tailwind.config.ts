@@ -19,58 +19,58 @@ export default {
 		},
 		extend: {
 			colors: {
-				border: 'hsl(var(--border))', // Kept as is, border opacity will be applied in className
-				input: 'hsla(var(--input), 0.35)', // Made transparent
+				border: 'hsl(var(--border))',
+				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-        ringAccent: 'hsl(var(--ring-accent))',
-				background: 'hsl(var(--background))', // Body background, kept mostly opaque via CSS variables
+        ringAccent: 'hsl(var(--ring-accent))', // Added accent ring color
+				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsla(var(--primary), 0.8)', // Slightly transparent
+					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsla(var(--secondary), 0.8)', // Slightly transparent
+					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
-					DEFAULT: 'hsla(var(--destructive), 0.8)', // Slightly transparent
+					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				muted: {
-					DEFAULT: 'hsla(var(--muted), 0.4)', // Made transparent
+					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsla(var(--accent), 0.6)', // Slightly transparent
+					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
-					DEFAULT: 'hsla(var(--popover), 0.65)', // Made transparent
+					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
 				},
 				card: {
-					DEFAULT: 'hsla(var(--card), 0.35)', // Made transparent
+					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sidebar: {
-					DEFAULT: 'hsla(var(--sidebar-background), 0.30)', // Made transparent
+					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsla(var(--sidebar-primary), 0.8)',
+					primary: 'hsl(var(--sidebar-primary))',
 					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsla(var(--sidebar-accent), 0.6)',
+					accent: 'hsl(var(--sidebar-accent))',
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsla(var(--sidebar-border), 0.5)', // Sidebar's own border can be semi-transparent
+					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 4px)',
-				sm: 'calc(var(--radius) - 8px)'
+				lg: 'var(--radius)', /* Will be 0.75rem (12px) */
+				md: 'calc(var(--radius) - 4px)', /* Will be 8px */
+				sm: 'calc(var(--radius) - 8px)'  /* Will be 4px */
 			},
 			fontFamily: {
-        sans: ['var(--font-sans-custom)'],
+        sans: ['var(--font-sans-custom)'], // Map Tailwind's sans to "Nunito Sans"
 			},
 			keyframes: {
 				'accordion-down': {
